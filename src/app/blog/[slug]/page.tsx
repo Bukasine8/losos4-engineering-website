@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import posts, { Post } from "@/lib/posts";
 
 type Props = {
   params: { slug: string };
@@ -6,20 +8,11 @@ type Props = {
 
 export default function Page({ params }: Props) {
   // For now we render a static article using the provided HTML structure.
-  import Link from 'next/link'
-  import { notFound } from 'next/navigation'
-  import posts, { Post } from '@/lib/posts'
+  const post: Post | undefined = posts.find((p) => p.slug === params.slug);
+  if (!post) return notFound();
 
-  type Props = {
-    params: { slug: string }
-  }
-
-  export default function Page({ params }: Props) {
-    const post: Post | undefined = posts.find((p) => p.slug === params.slug)
-    if (!post) return notFound()
-
-    return (
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden group/design-root">
+  return (
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden group/design-root">
         <header className="sticky top-0 z-50 w-full bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-white/10 dark:border-black/10">
           <div className="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 flex justify-center">
             <div className="flex items-center justify-between whitespace-nowrap py-4 max-w-7xl w-full">
@@ -179,4 +172,3 @@ export default function Page({ params }: Props) {
       </div>
     )
   }
-              <div className="flex gap-4">
